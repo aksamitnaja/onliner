@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+        window.onload = () => {
+            fetch('https://catalog.api.onliner.by/search/notebook?group=1')
+            .then(res => res.json())
+            .then(data => {
+                const notebooks = data.products;
+                const root = document.querySelector('#root');
+                const table = document.createElement('table');
+
+                notebooks.forEach(notebook => {
+                    const row = document.createElement('tr');
+
+                    const nameCell = document.createElement('td');
+                    nameCell.innerHTML = notebook.full_name;
+                    row.appendChild(nameCell);
+
+                    const priceCell = document.createElement('td');
+                    priceCell.innerHTML = notebook.prices.price_min.amount + '-' + notebook.prices.price_max.amount;
+                    row.appendChild(priceCell);
+
+                    const imgCell = document.createElement('td');
+                    const img = document.createElement('img');
+
+                    img.src = 'http:' + notebook.images.header;
+                    img.style.width = 90;
+                    imgCell.appendChild(img);
+                    row.appendChild(imgCell);
+
+                    table.appendChild(row);
+                });
+
+                root.appendChild(table);
+            })
+        }
+    </script>
+</head>
+<body>
+    <div id="root">
+    
+    </div>
+</body>
+</html>

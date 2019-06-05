@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+        window.onload = () => {
+            fetch('https://catalog.api.onliner.by/search/mobile?group=1')
+            .then(res => res.json())
+            .then(data => {
+                const phones = data.products;
+                const root = document.querySelector('#root');
+                const table = document.createElement('table');
+
+                phones.forEach(phone => {
+                    const row = document.createElement('tr');
+
+                    const nameCell = document.createElement('td');
+                    nameCell.innerHTML = phone.full_name;
+                    row.appendChild(nameCell);
+
+                    const priceCell = document.createElement('td');
+                    priceCell.innerHTML = phone.prices.price_min.amount + '-' + phone.prices.price_max.amount;
+                    row.appendChild(priceCell);
+
+                    const imgCell = document.createElement('td');
+                    const img = document.createElement('img');
+
+                    img.src = 'http:' + phone.images.header;
+                    img.style.width = 90;
+                    imgCell.appendChild(img);
+                    row.appendChild(imgCell);
+
+                    table.appendChild(row);
+                });
+
+                root.appendChild(table);
+            })
+        }
+    </script>
+</head>
+<body>
+    <div id="root">
+    
+    </div>
+</body>
+</html>
